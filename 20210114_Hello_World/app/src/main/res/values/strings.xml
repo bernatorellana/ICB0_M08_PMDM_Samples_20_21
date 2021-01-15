@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">La meva aplicació</string>
+    <string name="salutacio">Hola Món ! xxxxxxxxxxxxxx</string>
+    <string name="fitxa_personal">Fitxa Personal</string>
+    <string name="nom">Nom:</string>
+    <string name="hint_nom">Introduir un nom</string>
+    <string name="cognoms">Cognoms:</string>
+    <string name="hint_cognoms">Introduir cognoms</string>
+    <string name="introduir_tel_fon">Introduir Telèfon</string>
+    <string name="tel_fon">Telèfon:</string>
+    <string name="home">Home</string>
+    <string name="dona">Dona</string>
+</resources>
