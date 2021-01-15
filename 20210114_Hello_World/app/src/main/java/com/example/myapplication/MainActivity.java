@@ -3,6 +3,8 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnOk = findViewById(R.id.btnOk);
         imvFoto = findViewById(R.id.imvFoto);
 
+        //----------------------------------------
         // Programar esdeveniments
         btnRight.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,8 +66,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         btnOk.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
+/*
+        edtNom.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
+            @Override
+            public void afterTextChanged(Editable s) {
+                btnOk.setEnabled(s.toString().trim().length()>1);
+            }
+        });
+*/
 
         mostrarPersonaActual();
      }
@@ -112,4 +127,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Persona getPersonaActual() {
         return Persona.getPersones().get(this.indexPersona);
     }
+
+
+
+    //--------------------------------------------------
+    class TextWatcherPersonalitzat implements TextWatcher
+    {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            btnOk.setEnabled(s.toString().trim().length()>1);
+        }
+    }
+
+
+
+
 }
