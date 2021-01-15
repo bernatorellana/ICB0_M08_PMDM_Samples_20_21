@@ -27,6 +27,7 @@
             android:text="@string/nom"></TextView>
 
         <EditText
+            android:id="@+id/edtNom"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -50,6 +51,7 @@
             android:text="@string/cognoms"></TextView>
 
         <EditText
+            android:id="@+id/edtCognom"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -71,6 +73,7 @@
             android:text="@string/tel_fon"></TextView>
 
         <EditText
+            android:id="@+id/edtTelefon"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -88,12 +91,14 @@
         android:orientation="horizontal">
 
         <RadioButton
+            android:id="@+id/rdbSexeH"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="40dp"
             android:text="@string/home"></RadioButton>
 
         <RadioButton
+            android:id="@+id/rdbSexeD"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dona"></RadioButton>
@@ -101,8 +106,48 @@
     </RadioGroup>
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spnProvincia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"></LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnLeft"
+            android:text="<"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginRight="30dp"></Button>
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:text="Cancel"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            ></Button>
+        <Button
+            android:id="@+id/btnOk"
+            android:text="OK"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="2"></Button>
+        <Button
+            android:id="@+id/btnRight"
+            android:text=">"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_marginLeft="30dp"
+            android:layout_weight="1"></Button>
+    </LinearLayout>
+
+
 </LinearLayout>
