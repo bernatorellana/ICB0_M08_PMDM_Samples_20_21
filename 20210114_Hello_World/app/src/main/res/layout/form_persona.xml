@@ -120,7 +120,7 @@
         android:orientation="horizontal">
         <Button
             android:id="@+id/btnLeft"
-            android:text="<"
+            android:text="@string/left"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -142,7 +142,7 @@
             android:layout_weight="2"></Button>
         <Button
             android:id="@+id/btnRight"
-            android:text=">"
+            android:text="@string/right"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_marginLeft="30dp"
