@@ -27,7 +27,7 @@ public class Persona {
             );
             persones.add(
                     new Persona("Hillary", "Clinton",
-                            "777", false, R.drawable.mr_trump, "Wisconsin")
+                            "777", false, R.drawable.hillary, "Wisconsin")
             );
         }
         return persones;
