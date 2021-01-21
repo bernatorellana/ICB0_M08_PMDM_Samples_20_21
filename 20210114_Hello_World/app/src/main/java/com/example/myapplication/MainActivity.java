@@ -15,6 +15,8 @@ import android.widget.Spinner;
 
 import com.example.myapplication.model.Persona;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     /**
@@ -66,20 +68,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         btnOk.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
-/*
-        edtNom.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                btnOk.setEnabled(s.toString().trim().length()>1);
-            }
-        });
-*/
+        edtNom.addTextChangedListener(
+                new TextWatcherPersonalitzat(2,10,edtNom)
+        );
+        edtCognom.addTextChangedListener(
+                new TextWatcherPersonalitzat(2,10,edtCognom)
+        );
+        edtTelefon.addTextChangedListener(
+                new TextWatcherPersonalitzat(0,9,edtTelefon)
+        );
 
         mostrarPersonaActual();
      }
@@ -129,22 +126,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
+    ArrayList<Boolean> campsValids = new ArrayList<>();
     //--------------------------------------------------
-    class TextWatcherPersonalitzat implements TextWatcher
-    {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    //      | false | false |  true |  true |  false |  true
+    public class TextWatcherPersonalitzat implements TextWatcher{
+
+        private int longMin, longMax;
+        private EditText edt;
+        private int pos;
+        public TextWatcherPersonalitzat(int longitudMinima, int longitudMaxima, EditText edt) {
+            this.longMin = longitudMinima;
+            this.longMax = longitudMaxima;
+            this.edt = edt;
+            //-------------------------------------------------------
+            pos = campsValids.size();
+            campsValids.add(validaCamp());
+            updateBoto();
+
+        }
+        private boolean validaCamp(){
+            String text = edt.getText().toString().trim();
+            return !(text.length()<longMin || text.length()>longMax);
+        }
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {  }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) { }
 
         @Override
         public void afterTextChanged(Editable s) {
-            btnOk.setEnabled(s.toString().trim().length()>1);
+            campsValids.set(pos,validaCamp());
+            updateBoto();
+        }
+
+        private void updateBoto() {
+            btnOk.setEnabled(true);
+            for(boolean b:campsValids) {
+                if(!b) {
+                    btnOk.setEnabled(false);
+                    return;
+                }
+            }
         }
     }
-
 
 
 
