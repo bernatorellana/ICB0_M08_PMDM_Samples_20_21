@@ -10,8 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appcreaciodinamica.MainActivity;
 import com.example.appcreaciodinamica.R;
+import com.example.appcreaciodinamica.SelectedItemListener;
 import com.example.appcreaciodinamica.model.Persona;
 
 import java.util.List;
@@ -19,9 +19,9 @@ import java.util.List;
 public class PersonesAdapter extends RecyclerView.Adapter<PersonesAdapter.ViewHolder> {
 
     private List<Persona> mPersones;
-    private MainActivity mActivity;
+    private SelectedItemListener mActivity;
 
-    public PersonesAdapter(List<Persona> pPersones, MainActivity activity){
+    public PersonesAdapter(List<Persona> pPersones, SelectedItemListener activity){
         // desem les dades a un atribut de la classe
         mPersones = pPersones;
         mActivity= activity;
@@ -33,7 +33,6 @@ public class PersonesAdapter extends RecyclerView.Adapter<PersonesAdapter.ViewHo
         // Create a new view, which defines the UI of the list item
         View filaView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.fila, viewGroup, false);
-
         return new ViewHolder(filaView);
     }
 

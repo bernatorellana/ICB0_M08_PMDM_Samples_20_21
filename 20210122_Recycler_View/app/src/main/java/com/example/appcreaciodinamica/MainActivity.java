@@ -20,7 +20,7 @@ import com.example.appcreaciodinamica.model.Persona;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity   {
+public class MainActivity extends AppCompatActivity implements SelectedItemListener {
 
     RecyclerView rcyLlistaPersones;
     @Override
@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity   {
     }
 
 
+    @Override
     public void onSelectedItem(int filaSeleccionada) {
     }
 }
