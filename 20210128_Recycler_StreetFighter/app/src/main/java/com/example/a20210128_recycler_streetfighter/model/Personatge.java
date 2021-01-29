@@ -16,9 +16,7 @@ public class Personatge implements Serializable{
 	private String desc;
 	private int idRecursImatge;
 	private String urlImatge;
-
 	private boolean esDolent =false;
-	
 		
 	public Personatge(int id, String nom, String desc, int idRecursImatge, boolean esDolent ) {
 		super();
@@ -60,7 +58,7 @@ public class Personatge implements Serializable{
 		if(personatges==null) {
 			personatges = new ArrayList<Personatge> ();
 			personatges.add(new Personatge(0, "Blanca",
-					"Also known by his birth name Jimmy (ジミー Jimī?), is a video game character from the Street Fighter series, first appearing in Street Fighter II. He is a feral man from the Brazilian jungle with green skin and the ability to generate electricity. ",  R.drawable.blanca, false
+					"Also known by his birth name Jimmy (ジミー Jimī?), is a video game character from the Street Fighter series, first appearing in Street Fighter II. He is a feral man from the Brazilian jungle with green skin and the ability to generate electricity. ",  R.drawable.blanca, true
 					));
 			personatges.add(new Personatge(1, "Chun-li",
 					"Chun-Li (春麗 or チュンリー Shunrei or Chunrī?, Simplified Chinese: 春丽) is the main female protagonist of the Street Fighter series, originally debuting in Street Fighter II. The first female fighter in the series, she is an expert martial artist and Interpol officer who relentlessly seeks revenge for the death of her father at the hands of M. Bison. ", R.drawable.chunli, false ));
@@ -68,7 +66,7 @@ public class Personatge implements Serializable{
 			, R.drawable.dalshim, false ));
 			personatges.add(new Personatge(3, "Ken",
 					"Ken is Ryu's best friend from his childhood, as the two have trained in the same art of Ansatsuken for a long time. They share a very close bond with each other and will help out each other no matter the cost. Both of them have also trained together under Gouken. One can see that they care for each other and never quarrel. Ken’s able to notice when Ryu isn’t in the right state of mind as shown in the Alpha series, where Ken gave him his red headband in order for Ryu to stay focused and not lose his way. And then in Street Fighter V where he tells Hinagiku that only he will show up alone, and encourages Ryu to continue his training before facing Shadoloo. ",
-					R.drawable.ken, true));
+					R.drawable.ken, false));
 			personatges.add(new Personatge(4, "Zangief", "Also known as the \"Red Cyclone\" (赤きサイクロン Akaki Saikuron?), is a video game character from the Street Fighter series, first appearing in Street Fighter II. He is a national Russian hero who is always seen fighting for the glory of his country. ",R.drawable.zangief, true));
 			personatges.add(new Personatge(5, "Sagat", "Sagat (サガット Sagatto?, Thai: สกัด) is a video game character from the Street Fighter series, first appearing as the non-playable main antagonist and final boss in the original Street Fighter. He later returned as a boss in Street Fighter II before becoming playable in its update, Street Fighter II: Champion Edition. He is the \"Emperor of Muay Thai\" and a former member of Shadaloo, where he acted as a personal bodyguard for M. Bison. He later changed sides to redeem himself and became one of the protagonists in the series. "
 					, R.drawable.sagat, true));
