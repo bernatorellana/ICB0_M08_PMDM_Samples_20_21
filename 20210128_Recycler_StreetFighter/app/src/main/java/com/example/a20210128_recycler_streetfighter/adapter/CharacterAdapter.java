@@ -118,8 +118,24 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
     }
 
     public void moveDownSelected() {
+        moveSelected(+1);
     }
 
     public void moveUpSelected() {
+        moveSelected(-1);
+    }
+
+    private void moveSelected(int i) {
+
+        if(idxPersonatgeSeleccionat>=1) {
+
+            int idxFutur = idxPersonatgeSeleccionat+i;
+            if(idxFutur>=1 && idxFutur<mPersonatges.size()+1) {
+                Personatge p =  mPersonatges.remove(this.idxPersonatgeSeleccionat-1);
+                mPersonatges.add(idxFutur - 1, p);
+                idxPersonatgeSeleccionat = idxFutur;
+                notifyItemMoved(idxPersonatgeSeleccionat, idxFutur);
+            }
+        }
     }
 }
