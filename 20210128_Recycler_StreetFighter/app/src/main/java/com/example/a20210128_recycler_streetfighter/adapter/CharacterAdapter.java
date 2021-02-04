@@ -1,5 +1,6 @@
 package com.example.a20210128_recycler_streetfighter.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.a20210128_recycler_streetfighter.R;
 import com.example.a20210128_recycler_streetfighter.model.Personatge;
 
+import java.util.ArrayList;
+
 public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.ViewHolder> {
 
     private static final int TIPUS_HEADER = 0;
@@ -19,6 +22,11 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
     private static final int TIPUS_DOLENT = 2;
 
     private int idxPersonatgeSeleccionat = -1;
+    private ArrayList<Personatge> mPersonatges;
+
+    public CharacterAdapter(){
+        mPersonatges = Personatge.getPersonatges();
+    }
 
     @NonNull
     @Override
@@ -37,11 +45,19 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if(getItemViewType(position)!=TIPUS_HEADER) {
-            Personatge p = Personatge.getPersonatges().get(position - 1);
+            Personatge p = mPersonatges.get(position - 1);
             holder.txtNumero.setText((p.getId() + 1)+"");
             holder.txvDesc.setText(p.getDesc());
             holder.txvNom.setText(p.getNom());
             holder.imvCara.setImageResource(p.getIdRecursImatge());
+            boolean isSeleccionat = this.idxPersonatgeSeleccionat == position;
+            holder.itemView.setSelected(isSeleccionat);
+            //holder.itemView.setBackgroundColor(isSeleccionat? Color.YELLOW: Color.TRANSPARENT);
+//            holder.itemView.setBackgroundResource(!isSeleccionat?
+//                                                R.drawable.border_normal:
+//                                                R.drawable.border_highlighted);
+
+
         }
     }
 
@@ -50,7 +66,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
     public int getItemViewType(int position) {
         if(position==0) return TIPUS_HEADER;
 
-        Personatge p = Personatge.getPersonatges().get(position-1);
+        Personatge p = mPersonatges.get(position-1);
         return p.esDolent()?TIPUS_DOLENT:TIPUS_BO;
     }
     // 0            1           2
@@ -58,8 +74,10 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
 
     @Override
     public int getItemCount() {
-        return Personatge.getPersonatges().size() + 1 /*capçalera*/;
+        return mPersonatges.size() + 1 /*capçalera*/;
     }
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView imvCara;
@@ -76,9 +94,32 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
             fila.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CharacterAdapter.this.idxPersonatgeSeleccionat = getAdapterPosition();
+
+                    int anticIdxSeleccionat = idxPersonatgeSeleccionat;
+                    idxPersonatgeSeleccionat = getAdapterPosition();
+                    notifyItemChanged(anticIdxSeleccionat);
+                    notifyItemChanged(idxPersonatgeSeleccionat);
+
+                    Log.d("STREETFIGHTER", "idxPersonatgeSeleccionat:"+idxPersonatgeSeleccionat);
                 }
             });
         }
+    }
+
+    // mètodes per modificar la llista d'elements
+    public void deleteSelected(){
+        if(idxPersonatgeSeleccionat>=1) {
+            mPersonatges.remove(idxPersonatgeSeleccionat - 1);
+
+            notifyItemRemoved(idxPersonatgeSeleccionat );
+            //
+            idxPersonatgeSeleccionat = -1;
+        }
+    }
+
+    public void moveDownSelected() {
+    }
+
+    public void moveUpSelected() {
     }
 }
