@@ -127,14 +127,17 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
 
     private void moveSelected(int i) {
 
-        if(idxPersonatgeSeleccionat>=1) {
+        if(idxPersonatgeSeleccionat>=1) { // -1 no n'hi ha cap seleccionat, 0 capçalera
 
             int idxFutur = idxPersonatgeSeleccionat+i;
             if(idxFutur>=1 && idxFutur<mPersonatges.size()+1) {
                 Personatge p =  mPersonatges.remove(this.idxPersonatgeSeleccionat-1);
                 mPersonatges.add(idxFutur - 1, p);
+                int idxAnterior = idxPersonatgeSeleccionat;
                 idxPersonatgeSeleccionat = idxFutur;
-                notifyItemMoved(idxPersonatgeSeleccionat, idxFutur);
+                notifyItemMoved(idxAnterior, idxFutur);
+                //notifyItemChanged(idxPersonatgeSeleccionat);
+
             }
         }
     }
