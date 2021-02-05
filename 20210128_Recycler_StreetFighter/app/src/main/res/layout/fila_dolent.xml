@@ -2,7 +2,7 @@
 
 <LinearLayout
  android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="300dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:padding="3dp"
     android:background="@drawable/border_selector"
@@ -38,7 +38,7 @@
                 android:id="@+id/txvDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="10dp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/white"
                 android:text="M. Bison, known as Vega (ベガ Bega?) in Japan, is a video game character and the primary antagonist of the Street Fighter series, first appearing as a non-playable boss in Street Fighter II before becoming playable in its update, Street Fighter II: Champion Edition. He is a self-imposed dictator and megalomaniac seeking world domination. ">

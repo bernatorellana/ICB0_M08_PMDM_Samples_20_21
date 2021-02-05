@@ -105,7 +105,16 @@ public class Personatge implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "Personatge{" +
+				"id=" + id +
+				", nom='" + nom + '\'' +
+				", desc='" + desc + '\'' +
+				", idRecursImatge=" + idRecursImatge +
+				", urlImatge='" + urlImatge + '\'' +
+				", esDolent=" + esDolent +
+				'}';
+	}
 }

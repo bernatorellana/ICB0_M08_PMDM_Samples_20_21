@@ -23,9 +23,28 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
 
     private int idxPersonatgeSeleccionat = -1;
     private ArrayList<Personatge> mPersonatges;
+    OnSelectedItemListener mListener;
 
-    public CharacterAdapter(){
+    /**
+     *
+     * @param listener un activity que escolit l'esdeceniment onSelectedItem
+     */
+    public CharacterAdapter(OnSelectedItemListener listener){
         mPersonatges = Personatge.getPersonatges();
+        mListener = listener;
+    }
+
+
+    public static interface OnSelectedItemListener {
+        void onSelectedItem(Personatge seleccionat);
+    }
+
+    public int getSelectedIndex(){
+        return idxPersonatgeSeleccionat-1;
+    }
+
+    public Personatge getSelectedPersonatge(){
+        return mPersonatges.get(getSelectedIndex());
     }
 
     @NonNull
@@ -77,6 +96,9 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
         return mPersonatges.size() + 1 /*capçalera*/;
     }
 
+    public int getNumeroPersonatges(){
+        return mPersonatges.size();
+    }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -100,7 +122,18 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
                     notifyItemChanged(anticIdxSeleccionat);
                     notifyItemChanged(idxPersonatgeSeleccionat);
 
+
                     Log.d("STREETFIGHTER", "idxPersonatgeSeleccionat:"+idxPersonatgeSeleccionat);
+                }
+            });
+            fila.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    // Avisem al listener que algú a premut una fila
+                    if(mListener!=null) {
+                        mListener.onSelectedItem(mPersonatges.get(idxPersonatgeSeleccionat-1));
+                    }
+                    return true;
                 }
             });
         }
@@ -136,8 +169,6 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
                 int idxAnterior = idxPersonatgeSeleccionat;
                 idxPersonatgeSeleccionat = idxFutur;
                 notifyItemMoved(idxAnterior, idxFutur);
-                //notifyItemChanged(idxPersonatgeSeleccionat);
-
             }
         }
     }
