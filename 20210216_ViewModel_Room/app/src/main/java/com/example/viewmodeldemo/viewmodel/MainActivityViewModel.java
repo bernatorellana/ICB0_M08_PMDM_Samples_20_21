@@ -7,8 +7,12 @@ import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.ViewModel;
+import androidx.room.Room;
 
 import com.example.viewmodeldemo.MainActivity;
+import com.example.viewmodeldemo.dao.GameScoreDao;
+import com.example.viewmodeldemo.db.ScoreDatabase;
+import com.example.viewmodeldemo.model.GameScore;
 
 import java.io.DataInputStream;
 import java.io.FileInputStream;
@@ -23,7 +27,26 @@ public class MainActivityViewModel extends AndroidViewModel {
     public MainActivityViewModel(Application a){
         super(a);
         //carregaDeDisc(a);
-        carregaDeSharedPreferences(a);
+        //carregaDeSharedPreferences(a);
+        carregaDeRoom(a);
+    }
+
+    private void carregaDeRoom(Application a) {
+        ScoreDatabase db = Room.databaseBuilder(
+                a.getApplicationContext(),ScoreDatabase.class,"database_scores").build();
+        GameScoreDao gsdao = db.gameScoreDao();
+
+        GameScore gsc = gsdao.getTheGame();
+        if(gsc!=null) {
+            this.scoreA = gsc.getScoreA();
+            this.scoreB = gsc.getScoreB();
+        } else {
+            gsc = new GameScore();
+            gsc.setId(1);
+            gsc.setScoreA(0);
+            gsc.setScoreB(0);
+            gsdao.insert(gsc);
+        }
     }
 
     private void carregaDeSharedPreferences(Application a) {
