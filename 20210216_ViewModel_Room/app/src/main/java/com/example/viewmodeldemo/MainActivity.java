@@ -19,6 +19,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
@@ -37,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //viewBinding {
         //    enabled = true
         //}
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         //setContentView(R.layout.activity_main);
@@ -47,12 +50,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ViewModelProvider vmp=new ViewModelProvider(this);
         // cal afegir al Gradle:
         //     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-        viewmodel = vmp.get(MainActivityViewModel.class);
+        //------------------------------------------------------------
+        //   DANGER:
 
+
+
+        setIsLoading(true);
+        Observable.fromCallable(() -> {
+            // Això és el codi que s'executarà en un fil
+            viewmodel = vmp.get(MainActivityViewModel.class);
+            return false;
+        })
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe((result) -> {
+                // El codi que tenim aquí s'executa només quan el fil
+                // ha acabat !! A més, aquest codi s'executa en el fil ç
+                // d'interfície gràfica.
+                setIsLoading(false);
+                mostraPuntuacions();
+            });
+
+        //---------------------------------------------------
         binding.btnPlayerA.setOnClickListener(this);
         binding.btnPlayerB.setOnClickListener(this);
+    }
 
-        mostraPuntuacions();
+
+    private void setIsLoading(boolean isLoading){
+        binding.btnPlayerA.setEnabled(!isLoading);
+        binding.btnPlayerB.setEnabled(!isLoading);
+        binding.progressBar.setVisibility(isLoading?View.VISIBLE:View.INVISIBLE);
     }
 
     @Override

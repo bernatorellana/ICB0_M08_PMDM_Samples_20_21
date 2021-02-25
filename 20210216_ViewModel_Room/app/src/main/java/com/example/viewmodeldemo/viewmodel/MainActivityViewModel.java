@@ -24,6 +24,26 @@ import java.io.ObjectOutputStream;
 
 public class MainActivityViewModel extends AndroidViewModel {
 
+    private GameScore mGsc;
+    private int scoreA;
+    private int scoreB;
+
+
+    public int getScoreA() {
+        return scoreA;
+    }
+
+    public void setScoreA(int scoreA) {
+        this.scoreA = scoreA;
+    }
+
+    public int getScoreB() {
+        return scoreB;
+    }
+
+    public void setScoreB(int scoreB) {
+        this.scoreB = scoreB;
+    }
 
 
     public MainActivityViewModel(Application a){
@@ -34,20 +54,20 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
     private void carregaDeRoom(Application a) {
-        ScoreDatabase db = Room.databaseBuilder(
-                a.getApplicationContext(),ScoreDatabase.class,"database_scores").build();
+
+        ScoreDatabase db = ScoreDatabase.getDB(a.getApplicationContext());
         GameScoreDao gsdao = db.gameScoreDao();
 
-        GameScore gsc = gsdao.getTheGame();
-        if(gsc!=null) {
-            this.scoreA = gsc.getScoreA();
-            this.scoreB = gsc.getScoreB();
+        mGsc = gsdao.getTheGame();
+        if(mGsc!=null) {
+            this.scoreA = mGsc.getScoreA();
+            this.scoreB = mGsc.getScoreB();
         } else {
-            gsc = new GameScore();
-            gsc.setId(1);
-            gsc.setScoreA(0);
-            gsc.setScoreB(0);
-            gsdao.insert(gsc);
+            mGsc = new GameScore();
+            mGsc.setId(1);
+            mGsc.setScoreA(0);
+            mGsc.setScoreB(0);
+            gsdao.insert(mGsc);
         }
     }
 
@@ -75,25 +95,6 @@ public class MainActivityViewModel extends AndroidViewModel {
 
         }
     }
-
-    public int getScoreA() {
-        return scoreA;
-    }
-
-    public void setScoreA(int scoreA) {
-        this.scoreA = scoreA;
-    }
-
-    public int getScoreB() {
-        return scoreB;
-    }
-
-    public void setScoreB(int scoreB) {
-        this.scoreB = scoreB;
-    }
-
-    private int scoreA;
-    private int scoreB;
 
 
 
@@ -144,12 +145,24 @@ public class MainActivityViewModel extends AndroidViewModel {
 
 
     public void update() {
+
+        updateVersioRoom();
                 /*updateScoresVersioFile(
                 viewmodel.getScoreA(),
                 viewmodel.getScoreB());*/
 
-        updateScoresVersioSharedPreferences(
+       /* updateScoresVersioSharedPreferences(
                 getScoreA(),
-                getScoreB());
+                getScoreB());*/
+    }
+
+    private void updateVersioRoom() {
+
+        ScoreDatabase db = ScoreDatabase.getDB(getApplication().getApplicationContext());
+        GameScoreDao gsdao = db.gameScoreDao();
+        mGsc.setScoreA(this.getScoreA());
+        mGsc.setScoreB(this.getScoreB());
+        gsdao.update(mGsc);
+
     }
 }
