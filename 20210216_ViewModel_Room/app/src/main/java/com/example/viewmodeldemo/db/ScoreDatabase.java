@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.example.viewmodeldemo.dao.GameScoreDao;
 import com.example.viewmodeldemo.model.GameScore;
 
-@Database(entities = {GameScore.class}, version = 1)
+@Database(entities = {GameScore.class}, version = 1, exportSchema = false)
 public abstract class ScoreDatabase extends RoomDatabase {
     public abstract GameScoreDao gameScoreDao();
 

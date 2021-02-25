@@ -51,24 +51,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // cal afegir al Gradle:
         //     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
         //------------------------------------------------------------
-        //   DANGER:
-
-
+        // Aquest bloc de codi s'encarrega de llançar l'operació
+        // de recuperar el ViewModel. Donat que implica
+        // un accés a base de dades, cal dur a terme aquesta operació
+        // en un fil. Utilitzarem l'API de Reactive per engegar
+        // el fil de background i gestionar la resposta al fil
+        // d'interfície gràfica.
 
         setIsLoading(true);
         Observable.fromCallable(() -> {
+            //---------------- START OF THREAD ------------------------------------
             // Això és el codi que s'executarà en un fil
             viewmodel = vmp.get(MainActivityViewModel.class);
+            //Thread.sleep(3000);
             return false;
+            //--------------- END OF THREAD-------------------------------------
         })
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe((result) -> {
+                //-------------  UI THREAD ---------------------------------------
                 // El codi que tenim aquí s'executa només quan el fil
                 // ha acabat !! A més, aquest codi s'executa en el fil ç
                 // d'interfície gràfica.
                 setIsLoading(false);
                 mostraPuntuacions();
+                //-------------  END OF UI THREAD ---------------------------------------
             });
 
         //---------------------------------------------------
@@ -108,23 +116,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             viewmodel.setScoreB(viewmodel.getScoreB()+1);
         }
-        viewmodel.update();
 
-        mostraPuntuacions();
+        setIsLoading(true);
+        Observable.fromCallable(() -> {
+            //---------------- START OF THREAD ------------------------------------
+            // Això és el codi que s'executarà en un fil
+            viewmodel.update();
+            return false;
+            //--------------- END OF THREAD-------------------------------------
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((result) -> {
+                    //-------------  UI THREAD ---------------------------------------
+                    // El codi que tenim aquí s'executa només quan el fil
+                    // ha acabat !! A més, aquest codi s'executa en el fil ç
+                    // d'interfície gràfica.
+                    setIsLoading(false);
+                    mostraPuntuacions();
+                    //-------------  END OF UI THREAD ---------------------------------------
+                });
+
+
+
+
     }
-
-
 
     private void mostraPuntuacions() {
         binding.edtPlayerA.setText(""+viewmodel.getScoreA());
         binding.edtPlayerB.setText(""+viewmodel.getScoreB());
     }
-
-
-
-
-
-
-
 
 }
