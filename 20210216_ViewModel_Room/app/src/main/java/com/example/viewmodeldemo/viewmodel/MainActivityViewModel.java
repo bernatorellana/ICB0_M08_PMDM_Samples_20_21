@@ -17,8 +17,10 @@ import com.example.viewmodeldemo.model.GameScore;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class MainActivityViewModel extends AndroidViewModel {
 
@@ -52,15 +54,15 @@ public class MainActivityViewModel extends AndroidViewModel {
     private void carregaDeSharedPreferences(Application a) {
         Context c = a.getApplicationContext();
         SharedPreferences sp =  c.getSharedPreferences(c.getPackageName(),Context.MODE_PRIVATE);
-        this.scoreA = sp.getInt(MainActivity.SCORE_A, 0);
-        this.scoreB = sp.getInt(MainActivity.SCORE_B, 0);
+        this.scoreA = sp.getInt(SCORE_A, 0);
+        this.scoreB = sp.getInt(SCORE_B, 0);
     }
 
     private void carregaDeDisc(Application a) {
         Context c = a.getApplicationContext();
         FileInputStream fis=null;
         try {
-            fis =  c.openFileInput(MainActivity.getFileName());
+            fis =  c.openFileInput(getFileName());
             ObjectInputStream das = new ObjectInputStream(fis);
             this.scoreA = das.readInt();
             this.scoreB = das.readInt();
@@ -93,4 +95,61 @@ public class MainActivityViewModel extends AndroidViewModel {
     private int scoreA;
     private int scoreB;
 
+
+
+
+    public static final String SCORE_A = "SCORE_A";
+    public static final String SCORE_B = "SCORE_B";
+
+    private void updateScoresVersioSharedPreferences(int scoreA, int scoreB) {
+        Context c = getApplication().getApplicationContext();
+        SharedPreferences sp = c.getSharedPreferences(
+                c.getPackageName(), c.MODE_PRIVATE);
+        SharedPreferences.Editor editor =  sp.edit();
+        editor.putInt(SCORE_A, scoreA);
+        editor.putInt(SCORE_B, scoreB);
+        editor.commit();
+    }
+
+
+    private void updateScoresVersioFile(int scoreA, int scoreB) {
+        FileOutputStream fos=null;
+        try {
+            fos =  getApplication().getApplicationContext().openFileOutput(getFileName(), Context.MODE_PRIVATE );
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeInt(scoreA);
+            oos.writeInt(scoreB);
+            oos.flush();
+            oos.close();
+
+        } catch (FileNotFoundException e) {
+            Log.e("APP", "Error obrint arxiu per escriure",e);
+        } catch (IOException e) {
+            Log.e("APP", "Error obrint arxiu per escriure",e);
+        }
+        finally {
+            if(fos!=null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    Log.e("APP", "Error obrint arxiu per escriure",e);
+                }
+            }
+        }
+    }
+
+    public static String getFileName() {
+        return "scores.bin";
+    }
+
+
+    public void update() {
+                /*updateScoresVersioFile(
+                viewmodel.getScoreA(),
+                viewmodel.getScoreB());*/
+
+        updateScoresVersioSharedPreferences(
+                getScoreA(),
+                getScoreB());
+    }
 }

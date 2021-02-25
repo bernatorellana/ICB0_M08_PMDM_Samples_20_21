@@ -21,8 +21,7 @@ import java.io.ObjectOutputStream;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static final String SCORE_A = "SCORE_A";
-    public static final String SCORE_B = "SCORE_B";
+
     ActivityMainBinding binding;
     MainActivityViewModel viewmodel;
 
@@ -81,59 +80,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             viewmodel.setScoreB(viewmodel.getScoreB()+1);
         }
-        /*updateScoresVersioFile(
-                viewmodel.getScoreA(),
-                viewmodel.getScoreB());*/
+        viewmodel.update();
 
-        updateScoresVersioSharedPreferences(
-                viewmodel.getScoreA(),
-                viewmodel.getScoreB());
         mostraPuntuacions();
     }
 
-
-    private void updateScoresVersioSharedPreferences(int scoreA, int scoreB) {
-        SharedPreferences sp = getSharedPreferences(this.getPackageName(), MODE_PRIVATE);
-        SharedPreferences.Editor editor =  sp.edit();
-        editor.putInt(SCORE_A, scoreA);
-        editor.putInt(SCORE_B, scoreB);
-        editor.commit();
-    }
-
-
-    private void updateScoresVersioFile(int scoreA, int scoreB) {
-        FileOutputStream fos=null;
-        try {
-            fos =  openFileOutput(getFileName(), Context.MODE_PRIVATE );
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeInt(scoreA);
-            oos.writeInt(scoreB);
-            oos.flush();
-            oos.close();
-
-        } catch (FileNotFoundException e) {
-            Log.e("APP", "Error obrint arxiu per escriure",e);
-        } catch (IOException e) {
-            Log.e("APP", "Error obrint arxiu per escriure",e);
-        }
-        finally {
-            if(fos!=null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    Log.e("APP", "Error obrint arxiu per escriure",e);
-                }
-            }
-        }
-    }
-
-    public static String getFileName() {
-        return "scores.bin";
-    }
 
 
     private void mostraPuntuacions() {
         binding.edtPlayerA.setText(""+viewmodel.getScoreA());
         binding.edtPlayerB.setText(""+viewmodel.getScoreB());
     }
+
+
+
+
+
+
+
+
 }
