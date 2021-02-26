@@ -26,6 +26,14 @@ public class MainActivity extends AppCompatActivity {
         Bestiary b = loadBestiary();
         txvSortida.setText(b.toString());
 
+
+        inicialitzacioBD();
+
+
+
+    }
+
+    private void inicialitzacioBD() {
     }
 
 
