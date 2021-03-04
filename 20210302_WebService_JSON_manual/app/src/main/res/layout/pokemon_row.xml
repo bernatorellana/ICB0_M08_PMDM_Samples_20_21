@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="90dp">
+<ImageView
+    android:maxHeight="90dp"
+    android:id="@+id/imvSprite"
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_height="match_parent"
+    android:src="@drawable/ic_launcher_foreground"></ImageView>
+<TextView
+    android:id="@+id/txvNom"
+    android:layout_width="0dp"
+    android:layout_weight="5"
+    android:layout_height="match_parent"
+    android:textSize="40dp"
+    android:gravity="center"
+    android:text="PIKACHU">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</TextView>
+</LinearLayout>
