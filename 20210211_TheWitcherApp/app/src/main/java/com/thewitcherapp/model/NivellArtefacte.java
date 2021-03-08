@@ -8,14 +8,14 @@ import androidx.room.PrimaryKey;
         primaryKeys = {"artefacte_id","nivell"})
 public class NivellArtefacte {
     @ColumnInfo(name="artefacte_id")
-    long artefacteId;
-    long nivell;
-    int charges;
-    int duration;
+    public long artefacteId;
+    public long nivell;
+    public int charges;
+    public int duration;
     @ColumnInfo(name="fire_dg")
-    int fireDg;
+    public int fireDg;
     @ColumnInfo(name="silver_dg")
-    int silverDg;
+    public int silverDg;
     @ColumnInfo(name="phys_dg")
-    int physDg;
+    public int physDg;
 }

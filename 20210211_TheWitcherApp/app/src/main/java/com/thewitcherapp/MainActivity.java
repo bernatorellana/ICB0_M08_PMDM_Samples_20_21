@@ -6,7 +6,15 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.Bestiary;
+import com.example.MonsterType;
 import com.google.gson.Gson;
+import com.thewitcherapp.adapters.MonsterTypeAdapter;
+import com.thewitcherapp.dao.ArtefactDB;
+import com.thewitcherapp.dao.ArtefacteDAO;
+import com.thewitcherapp.dao.DbUtils;
+import com.thewitcherapp.dao.TipusArtefacteDAO;
+import com.thewitcherapp.model.Artefacte;
+import com.thewitcherapp.model.TipusArtefacte;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +22,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.Buffer;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+implements MonsterTypeAdapter.SelectedMonsterTypeListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,14 +35,19 @@ public class MainActivity extends AppCompatActivity {
         Bestiary b = loadBestiary();
         txvSortida.setText(b.toString());
 
-
         inicialitzacioBD();
-
-
 
     }
 
     private void inicialitzacioBD() {
+        ArtefactDB db = DbUtils.getDb(this);
+
+        TipusArtefacteDAO tartDAO = db.getTipusArtefacteDao();
+        tartDAO.insert(new TipusArtefacte(1, "oil"));
+
+        ArtefacteDAO artDAO = db.getArtefacteDao();
+        artDAO.insert(new Artefacte(1,"oil_bomb","oil bomb","xaxi guai",1,"imatge"));
+
     }
 
 
@@ -70,5 +84,12 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return json;
+    }
+
+
+
+    @Override
+    public void onSelectedMonsterType(MonsterType mt) {
+
     }
 }

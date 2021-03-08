@@ -6,6 +6,11 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "tipus_artefacte")
 public class TipusArtefacte {
     @PrimaryKey
-    long id;
-    String nom;
+    public long id;
+    public String nom;
+
+    public TipusArtefacte(long id, String nom) {
+        this.id = id;
+        this.nom = nom;
+    }
 }

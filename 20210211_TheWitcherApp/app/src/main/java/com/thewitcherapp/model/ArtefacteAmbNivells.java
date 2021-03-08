@@ -6,8 +6,8 @@ import androidx.room.Relation;
 import java.util.List;
 
 public class ArtefacteAmbNivells {
-    @Embedded Artefacte artefacte;
+    public @Embedded Artefacte artefacte;
     @Relation(parentColumn = "id",
     entityColumn = "artefacte_id")
-    List<NivellArtefacte> nivells;
+    public List<NivellArtefacte> nivells;
 }
