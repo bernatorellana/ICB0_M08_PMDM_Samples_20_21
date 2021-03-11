@@ -9,6 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.20210128_Recycler_StreetFighter">
+        <activity
+            android:name=".DetallActivity"
+            android:label="@string/title_activity_detall"
+            android:theme="@style/Theme.20210128_Recycler_StreetFighter.NoActionBar"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

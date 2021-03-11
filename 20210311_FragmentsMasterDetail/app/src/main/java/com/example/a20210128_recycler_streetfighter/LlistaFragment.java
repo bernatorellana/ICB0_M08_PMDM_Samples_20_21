@@ -1,7 +1,9 @@
 package com.example.a20210128_recycler_streetfighter;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,9 +31,21 @@ public class LlistaFragment extends Fragment implements CharacterAdapter.OnSelec
     public static final String TAG = "LLISTA" ;
     private CharacterAdapter mAdapter;
     private RecyclerView mRcyPersonatges;
+    private SelectedItemListener mListener;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    public interface SelectedItemListener {
+        public void onSelectedItem(Personatge seleccionat);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(! (context instanceof SelectedItemListener)) {
+            throw new RuntimeException("La activity no implementa SelectedItemListener");
+        }
+        mListener = (SelectedItemListener)context;
+    }
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -106,14 +120,22 @@ public class LlistaFragment extends Fragment implements CharacterAdapter.OnSelec
     private void itemDelete() {
         Log.d("STREETFIGHTER","DELETE");
         mAdapter.deleteSelected();
+        mListener.onSelectedItem(null);
     }
 
     @Override
     public void onSelectedItem(Personatge seleccionat) {
         Log.d("STREETFIGHTER","Personatge seleccionat:"+seleccionat);
 
+       mListener.onSelectedItem(seleccionat);
+    }
+
+    @Override
+    public void onSelectedItemLongClick(Personatge seleccionat) {
+        mListener.onSelectedItem(seleccionat);
         // activarem el Contextual Action Mode
-       getActivity().startActionMode(this);
+        getActivity().startActionMode(this);
+
     }
 
 

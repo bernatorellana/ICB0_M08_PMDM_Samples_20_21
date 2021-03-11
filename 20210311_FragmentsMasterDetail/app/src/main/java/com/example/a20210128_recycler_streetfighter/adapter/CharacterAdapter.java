@@ -37,6 +37,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
 
     public static interface OnSelectedItemListener {
         void onSelectedItem(Personatge seleccionat);
+        void onSelectedItemLongClick(Personatge seleccionat);
     }
 
     public int getSelectedIndex(){
@@ -122,7 +123,9 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
                     notifyItemChanged(anticIdxSeleccionat);
                     notifyItemChanged(idxPersonatgeSeleccionat);
 
-
+                    if(mListener!=null) {
+                        mListener.onSelectedItem(mPersonatges.get(idxPersonatgeSeleccionat-1));
+                    }
                     Log.d("STREETFIGHTER", "idxPersonatgeSeleccionat:"+idxPersonatgeSeleccionat);
                 }
             });
@@ -131,7 +134,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
                 public boolean onLongClick(View view) {
                     // Avisem al listener que algú a premut una fila
                     if(mListener!=null) {
-                        mListener.onSelectedItem(mPersonatges.get(idxPersonatgeSeleccionat-1));
+                        mListener.onSelectedItemLongClick(mPersonatges.get(idxPersonatgeSeleccionat-1));
                     }
                     return true;
                 }
