@@ -18,6 +18,7 @@ import android.widget.Button;
  */
 public class EdicioFragment extends Fragment {
 
+    public static final String TAG="A";
 
     public interface NavigationListener {
         public void MarxarDeA();
@@ -37,6 +38,8 @@ public class EdicioFragment extends Fragment {
 
     public EdicioFragment() {
         // Required empty public constructor
+        // Li diem que mantingui l'estat encara que hi hagi canvi de configuració (girs, etc.)
+        setRetainInstance(true);
     }
 
     @Override

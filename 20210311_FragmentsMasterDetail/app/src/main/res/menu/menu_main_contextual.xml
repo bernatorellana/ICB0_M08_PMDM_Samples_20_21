@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <item android:id="@+id/itmDelete" android:icon="@android:drawable/ic_delete" android:title="Delete" app:showAsAction="always"></item>
+    <item android:id="@+id/itmUp"
+        android:icon="@android:drawable/arrow_up_float"
+        android:title="Up" app:showAsAction="always"></item>
+    <item android:id="@+id/itmDown"
+        android:icon="@android:drawable/arrow_down_float"
+        android:title="Down" app:showAsAction="always"></item>
+</menu>

@@ -2,6 +2,7 @@ package com.example.a20210308_fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,7 @@ import androidx.fragment.app.Fragment;
  */
 public class FragmentB extends Fragment {
 
-
+    public static final String TAG="B";
 
     public interface NavigationListener {
         public void MarxarDeB();
@@ -37,6 +38,8 @@ public class FragmentB extends Fragment {
 
     public FragmentB() {
         // Required empty public constructor
+        // Li diem que mantingui l'estat encara que hi hagi canvi de configuració (girs, etc.)
+        setRetainInstance(true);
     }
 
     @Override
@@ -81,6 +84,7 @@ public class FragmentB extends Fragment {
         // Inflate the layout for this fragment
         View root =  inflater.inflate(R.layout.fragment_b, container, false);
 
+        Log.d("XXX", savedInstanceState!=null?savedInstanceState.toString():":null");
 
         Button button = root.findViewById(R.id.btnGoA);
         button.setOnClickListener(new View.OnClickListener() {
