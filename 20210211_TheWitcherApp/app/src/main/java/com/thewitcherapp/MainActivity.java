@@ -46,7 +46,8 @@ implements MonsterTypeAdapter.SelectedMonsterTypeListener {
         tartDAO.insert(new TipusArtefacte(1, "oil"));
 
         ArtefacteDAO artDAO = db.getArtefacteDao();
-        artDAO.insert(new Artefacte(1,"oil_bomb","oil bomb","xaxi guai",1,"imatge"));
+        Artefacte a = new Artefacte(1,"oil_bomb","oil bomb","xaxi guai",1,"imatge");
+        artDAO.insert(a);
 
     }
 

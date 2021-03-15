@@ -10,7 +10,7 @@ public class DbUtils {
     public static ArtefactDB getDb(Context context){
         ArtefactDB db = Room.databaseBuilder(context,
                 ArtefactDB.class, "database-name").
-                allowMainThreadQueries().
+                allowMainThreadQueries(). // BIG KK
                 build();
         return db;
     }
