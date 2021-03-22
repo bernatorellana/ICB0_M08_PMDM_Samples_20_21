@@ -97,6 +97,9 @@ public class CustomView extends View {
         Path p = new Path();
         p.moveTo(0, 0);
         p.cubicTo(ratio * w, ratio * h, (1 - ratio) * w, ratio * h, w, 0);
+        p.cubicTo((1 - ratio) * w, ratio * h , (1 - ratio) * w, h * (1-ratio) , w   , h);
+        p.cubicTo((1 - ratio) * w, h * (1-ratio) , (ratio) * w, h * (1-ratio) , 0,h);
+        p.cubicTo((ratio) * w, h * (1-ratio), ratio*w, ratio*h, 0,0);
 
         canvas.drawPath(p,pLinia);
 

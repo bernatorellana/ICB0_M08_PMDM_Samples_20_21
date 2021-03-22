@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<item android:id="@+id/mniBrush" android:icon="@android:drawable/ic_input_add"
+    android:title="brush" app:showAsAction="always"></item>
+    <item android:id="@+id/mniLine" android:icon="@android:drawable/ic_delete"
+        android:title="Line" app:showAsAction="always"></item>
+</menu>
