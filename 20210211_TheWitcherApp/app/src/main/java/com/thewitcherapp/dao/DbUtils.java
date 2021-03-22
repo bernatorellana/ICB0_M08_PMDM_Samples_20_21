@@ -6,12 +6,14 @@ import androidx.room.Room;
 
 public class DbUtils {
 
-
+    private static ArtefactDB db = null;
     public static ArtefactDB getDb(Context context){
-        ArtefactDB db = Room.databaseBuilder(context,
-                ArtefactDB.class, "database-name").
-                allowMainThreadQueries(). // BIG KK
-                build();
+        if(db==null) {
+            db = Room.databaseBuilder(context,
+                    ArtefactDB.class, "database-name").
+                    allowMainThreadQueries(). // BIG KK
+                    build();
+        }
         return db;
     }
 }

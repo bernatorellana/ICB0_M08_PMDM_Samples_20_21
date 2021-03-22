@@ -1,8 +1,11 @@
 package com.thewitcherapp.model;
 
+import java.util.List;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.Transaction;
 
 @Entity(tableName = "nivell_artefacte",
         primaryKeys = {"artefacte_id","nivell"})
@@ -18,4 +21,8 @@ public class NivellArtefacte {
     public int silverDg;
     @ColumnInfo(name="phys_dg")
     public int physDg;
+
+
+
+
 }

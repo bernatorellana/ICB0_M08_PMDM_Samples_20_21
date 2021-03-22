@@ -1,6 +1,7 @@
 package com.thewitcherapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Transaction;
 
 import android.os.Bundle;
 import android.widget.TextView;
@@ -14,6 +15,10 @@ import com.thewitcherapp.dao.ArtefacteDAO;
 import com.thewitcherapp.dao.DbUtils;
 import com.thewitcherapp.dao.TipusArtefacteDAO;
 import com.thewitcherapp.model.Artefacte;
+import com.thewitcherapp.model.ArtefacteAmbNivells;
+import com.thewitcherapp.model.Ingredient;
+import com.thewitcherapp.model.NivellArtefacte;
+import com.thewitcherapp.model.NivellArtefacteAmbIngredients;
 import com.thewitcherapp.model.TipusArtefacte;
 
 import java.io.BufferedReader;
@@ -21,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.Buffer;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
 implements MonsterTypeAdapter.SelectedMonsterTypeListener {
@@ -50,6 +56,20 @@ implements MonsterTypeAdapter.SelectedMonsterTypeListener {
         artDAO.insert(a);
 
     }
+
+    @Transaction
+    public  NivellArtefacteAmbIngredients getNivellArtefacteAmbIngredients(long artefacte_id, long nivell, long  ingredientId) {
+        ArtefactDB db = DbUtils.getDb(this);
+
+        ArtefacteDAO artDAO = db.getArtefacteDao();
+        ArtefacteAmbNivells an = artDAO.getArtefacteAmbNivells(artefacte_id);
+        an.nivells
+        NivellArtefacte n = getNivell(artefacte_id,nivell);
+        List<Ingredient> ingredients = getIngredients(artefacte_id,nivell);
+
+        return  new NivellArtefacteAmbIngredients(n,ingredients);
+    }
+
 
 
     private Bestiary loadBestiary() {
