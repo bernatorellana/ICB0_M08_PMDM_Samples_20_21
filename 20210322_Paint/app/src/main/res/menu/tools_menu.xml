@@ -6,7 +6,7 @@
     <item android:id="@+id/mniLine" android:icon="@drawable/linia"
         android:title="Line" app:showAsAction="always"></item>
     <item android:id="@+id/mniMove" android:icon="@drawable/hand"
-        android:title="Line" app:showAsAction="always"></item>
+        android:title="Move" app:showAsAction="always"></item>
     <item android:id="@+id/mniColor" android:icon="@drawable/color"
-        android:title="Line" app:showAsAction="always"></item>
+        android:title="Color" app:showAsAction="always"></item>
 </menu>
