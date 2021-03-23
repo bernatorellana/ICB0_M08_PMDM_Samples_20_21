@@ -9,10 +9,15 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Pissarra mPissarra;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mPissarra = findViewById(R.id.pissarra);
     }
 
     @Override
@@ -25,7 +30,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
-        switch()
+        switch(item.getItemId()){
+            case R.id.mniBrush: mPissarra.setBrushMode();break;
+            case R.id.mniLine: mPissarra.setLineMode();break;
+            case R.id.mniMove: mPissarra.setMoveMode();break;
+            case R.id.mniColor: mPissarra.setColorMode();break;
+
+        }
 
         return true;
     }

@@ -7,6 +7,7 @@
     tools:context=".MainActivity">
 
     <com.example.a20210322_paint.Pissarra
+        android:id="@+id/pissarra"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
