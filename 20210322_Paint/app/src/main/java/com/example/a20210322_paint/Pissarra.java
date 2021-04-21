@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,12 +20,16 @@ public class Pissarra extends View implements View.OnLayoutChangeListener {
 
     private Estat mEstat  = Estat.BRUSH;
     private Bitmap buffer;
+    private Bitmap bufferColorPicker;
     private Canvas bufferCanvas;
     private Paint paint;
     private Paint paintStroke;
     private Paint foscSemitransparent;
     private Path liniaActual;
-
+    private int mColorSeleccionat;
+    //------------------------------------------
+    RectF rscDstColorPicker;
+    float ampladaColorPicker, alsadaColorPicker;
     //-------------------------------------------
     public Pissarra(Context context) {
         this(context, null);
@@ -32,13 +38,16 @@ public class Pissarra extends View implements View.OnLayoutChangeListener {
     public Pissarra(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         addOnLayoutChangeListener(this);
+
+        mColorSeleccionat = Color.GREEN;
         //---------------------------------------------------
         paint = new Paint();
-        paint.setColor(Color.GREEN);
+        paint.setColor(mColorSeleccionat);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         //---------------------------------------------------
         paintStroke = new Paint();
-        paintStroke.setColor(Color.GREEN);
+        paintStroke.setColor(mColorSeleccionat);
+        paintStroke.setStrokeWidth(3);
         paintStroke.setStyle(Paint.Style.STROKE);
         //---------------------------------------------------
         foscSemitransparent = new Paint();
@@ -50,6 +59,7 @@ public class Pissarra extends View implements View.OnLayoutChangeListener {
     @Override
     public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
         buffer = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+        bufferColorPicker= BitmapFactory.decodeResource(getResources(),R.drawable.color_picker);
         bufferCanvas = new Canvas(buffer);
     }
 
@@ -67,6 +77,29 @@ public class Pissarra extends View implements View.OnLayoutChangeListener {
         } else
         if(mEstat==Estat.COLOR) {
             canvas.drawRect(0,0, getWidth(),getHeight(), foscSemitransparent);
+            Rect recSrc = new Rect(0,0,bufferColorPicker.getWidth(), bufferColorPicker.getHeight());
+
+            float RA_Src = bufferColorPicker.getWidth() / bufferColorPicker.getHeight(); // 16/9
+
+            if( this.getWidth()> this.getHeight()) {
+                // horitzontal
+                alsadaColorPicker = this.getHeight();
+                ampladaColorPicker = alsadaColorPicker * RA_Src;
+                float baseX = (getWidth()-ampladaColorPicker)*0.5f;
+                rscDstColorPicker = new RectF(baseX,0, baseX+ampladaColorPicker, alsadaColorPicker);
+            } else {
+                // vertical
+                ampladaColorPicker = this.getWidth();
+                alsadaColorPicker = ampladaColorPicker / RA_Src;
+                float baseY = (getHeight()-alsadaColorPicker)*0.5f;
+                rscDstColorPicker = new RectF(0,baseY, ampladaColorPicker, baseY+alsadaColorPicker);
+            }
+            canvas.drawBitmap(bufferColorPicker,recSrc, rscDstColorPicker, null);
+
+            paint.setColor(mColorSeleccionat);
+            paintStroke.setColor(mColorSeleccionat);
+
+            canvas.drawCircle(60,200, 60, paint);
         }
 
         /*if(cursorActiu) {
@@ -113,6 +146,16 @@ public class Pissarra extends View implements View.OnLayoutChangeListener {
                     liniaActual=null;
                     break;
             }
+        } else if(mEstat == Estat.COLOR){
+
+
+            float factorZoom = bufferColorPicker.getWidth() / ampladaColorPicker ;
+            float x = (event.getX() - rscDstColorPicker.left) * factorZoom;
+            float y = (event.getY() - rscDstColorPicker.top) * factorZoom;
+            if(x>=0 && x<bufferColorPicker.getWidth() &&
+                    y>=0 && y<bufferColorPicker.getHeight()  ) {
+                mColorSeleccionat = bufferColorPicker.getPixel((int) x, (int) y);
+            }
         }
         this.invalidate();
 
@@ -142,10 +185,11 @@ public class Pissarra extends View implements View.OnLayoutChangeListener {
 
         if(nouEstat==Estat.COLOR) {
             mAnterior = mEstat;
-            this.invalidate();
+
         }
 
         mEstat = nouEstat;
+        this.invalidate();
     }
 
 
